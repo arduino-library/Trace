@@ -98,6 +98,8 @@ class TraceClass {
      
 
   private:
+    void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize); 
+    void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     uint16_t eepromAddr = 0;
     uint16_t bufSize    = 0;
     uint16_t index      = 0;

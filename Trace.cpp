@@ -25,9 +25,9 @@
  */
 
 #include "Trace.h"
-#include "Helper.h"
 #include <EEPROM.h>
 #include <assert.h>
+
 
 
 
@@ -125,5 +125,26 @@ void TraceClass::dump (void) {
   Serial.println();
 }
 
+
+
+
+void TraceClass::eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize) {
+  uint8_t i, v;
+
+  for (i = 0; i < bufSize && i < EEPROM.length (); i++) {
+    v = EEPROM.read (addr + i);
+    if ( buf[i] != v) EEPROM.write (addr + i, buf[i]);
+  }
+}
+
+
+
+void TraceClass::eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize) {
+  uint8_t i;
+
+  for (i = 0; i < bufSize; i++) {
+    buf[i] = EEPROM.read (addr + i);
+  }
+}
 
  
