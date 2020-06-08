@@ -1,15 +1,16 @@
-/* 
- * Trace Buffer Implementation 
+/*
+ * Trace Buffer Implementation
  *
  * This source file can be found under:
- * http://www.github.com/microfarad-de/Trace
- * 
+ * http://www.github.com/arduino-library/Trace
+ *
  * Please visit:
  *   http://www.microfarad.de
  *   http://www.github.com/microfarad-de
- * 
+ *   http://www.github.com/arduino-library
+ *
  * Copyright (C) 2019 Karim Hraibi (khraibi at gmail.com)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +22,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -57,7 +58,7 @@ class TraceClass {
      */
     void initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs);
 
-    
+
     /*
      * Call this function in the Arduino main loop
      */
@@ -75,13 +76,13 @@ class TraceClass {
      */
     void stop (void);
 
-    
+
     /*
      * Reset the timestamp, also stops incrementing
      */
     void reset (void);
 
-    
+
     /*
      * Write a new trace message to EEPROM
      * Parameters:
@@ -95,10 +96,10 @@ class TraceClass {
      */
      void dump (void);
 
-     
+
 
   private:
-    void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize); 
+    void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     uint16_t eepromAddr = 0;
     uint16_t bufSize    = 0;

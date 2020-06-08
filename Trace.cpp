@@ -1,15 +1,16 @@
-/* 
- * Trace Buffer Implementation 
+/*
+ * Trace Buffer Implementation
  *
  * This source file can be found under:
- * http://www.github.com/microfarad-de/Trace
- * 
+ * http://www.github.com/arduino-library/Trace
+ *
  * Please visit:
  *   http://www.microfarad.de
  *   http://www.github.com/microfarad-de
- * 
+ *   http://www.github.com/arduino-library
+ *
  * Copyright (C) 2019 Karim Hraibi (khraibi at gmail.com)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +22,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "Trace.h"
@@ -43,7 +44,7 @@ void TraceClass::initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t per
   eepromRead (eepromAddr, (uint8_t*)&this->index, sizeof(this->index));
 
   if (this->index > bufSize) this->index = 0;
-  
+
 }
 
 
@@ -74,13 +75,13 @@ void TraceClass::reset (void) {
   stamp = 0;
   stop ();
 }
- 
+
 
 void TraceClass::log (char message, uint16_t value) {
   TraceMsg_t msg;
 
   if (bufSize == 0) return;
-  
+
   msg.stamp   = stamp;
   msg.message = message;
   msg.value   = value;
@@ -147,4 +148,4 @@ void TraceClass::eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize) {
   }
 }
 
- 
+
