@@ -31,6 +31,8 @@
 
 #include <Arduino.h>
 
+#define TRACE_PRINTF_BUF_SIZE  40   // Character buffer size for intermediate print formatting
+
 /*
  * Trace message layout
  */
@@ -52,11 +54,13 @@ class TraceClass {
      * Initialize the trace object
      * Prerequisite: Serial.begin() must be called first
      * Parameters:
-     *   eepromAddr : start address in EEPROM
-     *   bufSize    : trace buffer size
-     *   periodMs   : time duration in ms for incrementing the timestamp
+     *   eepromAddr  : start address in EEPROM
+     *   bufSize     : trace buffer size
+     *   periodMs    : time duration in ms for incrementing the timestamp
+     *   msgList     : trace message string lookup table
+     *   msgListSize : size of the trace message string lookup table
      */
-    void initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs);
+    void initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs, const char **msgList = nullptr, const size_t msgListSize = 0);
 
 
     /*
@@ -89,7 +93,7 @@ class TraceClass {
      *   message : user-readable ascii character identifying the trace message
      *   value   : integer value
      */
-    void log (char message, uint16_t value);
+    void log (char message, uint16_t value = 0);
 
     /*
      * Dump the accumulated trace buffer
@@ -101,13 +105,16 @@ class TraceClass {
   private:
     void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
-    uint16_t eepromAddr = 0;
-    uint16_t bufSize    = 0;
-    uint16_t index      = 0;
-    uint32_t periodMs   = 1;
-    uint32_t stamp      = 0;
-    uint32_t stampTs    = 0;
-    bool     active     = false;
+    uint16_t eepromAddr  = 0;
+    uint16_t bufSize     = 0;
+    uint16_t index       = 0;
+    uint32_t periodMs    = 1;
+    uint32_t stamp       = 0;
+    uint32_t stampTs     = 0;
+    bool     active      = true;
+    const char **msgList = nullptr;
+    size_t msgListSize   = 0;
+    char printBuffer[TRACE_PRINTF_BUF_SIZE];
 };
 
 

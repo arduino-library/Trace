@@ -32,13 +32,15 @@
 
 
 
-void TraceClass::initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs) {
+void TraceClass::initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs, const char **msgList, const size_t msgListSize) {
 
   assert (eepromAddr + sizeof(this->index) + sizeof(TraceMsg_t) * bufSize <= EEPROM.length());
 
-  this->eepromAddr = eepromAddr;
-  this->bufSize    = bufSize;
-  this->periodMs   = periodMs;
+  this->eepromAddr  = eepromAddr;
+  this->bufSize     = bufSize;
+  this->periodMs    = periodMs;
+  this->msgList     = msgList;
+  this->msgListSize = msgListSize;
 
   // Read the index from EEPROM
   eepromRead (eepromAddr, (uint8_t*)&this->index, sizeof(this->index));
@@ -111,13 +113,23 @@ void TraceClass::dump (void) {
     // Read the trace message from EEPROM
     eepromRead (eepromAddr + sizeof(index) + idx * sizeof(TraceMsg_t), (uint8_t *)&msg, sizeof(TraceMsg_t));
 
-    if (msg.stamp < 10)  Serial.print (' ');
-    if (msg.stamp < 100) Serial.print (' ');
-    Serial.print (msg.stamp, DEC);
-    Serial.print (": ");
-    Serial.print (msg.message);
-    Serial.print (' ');
-    Serial.println (msg.value, DEC);
+    if (msg.stamp < 10)    Serial.print (' ');
+    if (msg.stamp < 100)   Serial.print (' ');
+
+    if (msgList == nullptr) {
+      Serial.print (msg.stamp, DEC);
+      Serial.print (": ");
+      Serial.print   (msg.message);
+      Serial.print   (' ');
+      Serial.println (msg.value, DEC);
+    }
+    else if ((size_t)msg.message < msgListSize) {
+      Serial.print (msg.stamp, DEC);
+      Serial.print (": ");
+      snprintf(printBuffer, sizeof(printBuffer), msgList[(size_t)msg.message], msg.value);
+      Serial.println (printBuffer);
+    }
+
 
     idx++;
     if (idx >= bufSize) idx = 0;
