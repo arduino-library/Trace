@@ -7,9 +7,10 @@ Main features:
 * The trace data and the trace pointer are saved in EEPROM
 * Tracing is seamlessly resumed following a system reboot
 
-Usage example:
+Usage examples:
 
 * https://github.com/microfarad-de/li-charger
+* https://github.com/microfarad-de/fridge-controller
 
 Git commands:
 
