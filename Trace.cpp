@@ -81,7 +81,7 @@ void TraceClass::reset (void) {
 
 void TraceClass::log (char message, uint16_t value) {
   TraceMsg_t msg;
-
+  if (!active) return;
   if (bufSize == 0) return;
 
   msg.stamp   = stamp;
