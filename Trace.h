@@ -60,7 +60,13 @@ class TraceClass {
      *   msgList     : trace message string lookup table
      *   msgListSize : size of the trace message string lookup table
      */
-    void initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs, const char **msgList = nullptr, const size_t msgListSize = 0);
+    void initialize (
+        uint16_t eepromAddr,
+        uint16_t bufSize,
+        uint32_t periodMs,
+        const char **msgList = nullptr,
+        const size_t msgListSize = 0
+        );
 
 
     /*
@@ -105,15 +111,16 @@ class TraceClass {
   private:
     void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
-    uint16_t eepromAddr  = 0;
-    uint16_t bufSize     = 0;
-    uint16_t index       = 0;
     uint32_t periodMs    = 1;
     uint32_t stamp       = 0;
     uint32_t stampTs     = 0;
+    uint32_t printDelay  = 0;
+    uint16_t eepromAddr  = 0;
+    uint16_t bufSize     = 0;
+    uint16_t index       = 0;
+    size_t msgListSize   = 0;
     bool     active      = true;
     const char **msgList = nullptr;
-    size_t msgListSize   = 0;
     char printBuffer[TRACE_PRINTF_BUF_SIZE];
 };
 

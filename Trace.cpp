@@ -129,8 +129,6 @@ void TraceClass::dump (void) {
       snprintf(printBuffer, sizeof(printBuffer), msgList[(size_t)msg.message], msg.value);
       Serial.println (printBuffer);
     }
-
-
     idx++;
     if (idx >= bufSize) idx = 0;
   }
