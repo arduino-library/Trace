@@ -132,8 +132,10 @@ void TraceClass::dump (void) {
     idx++;
     if (idx >= bufSize) idx = 0;
   }
-
-  Serial.println();
+  if (stamp < 10)  Serial.print (' ');
+  if (stamp < 100) Serial.print (' ');
+  Serial.println (stamp, DEC);
+  Serial.println ();
 }
 
 
