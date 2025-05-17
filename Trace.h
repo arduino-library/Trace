@@ -59,13 +59,15 @@ class TraceClass {
      *   periodMs    : time duration in ms for incrementing the timestamp
      *   msgList     : trace message string lookup table
      *   msgListSize : size of the trace message string lookup table
+     *   callback    : optional callback function for executing time critical tasks during trace dump
      */
     void initialize (
         uint16_t eepromAddr,
         uint16_t bufSize,
         uint32_t periodMs,
         const char **msgList = nullptr,
-        const size_t msgListSize = 0
+        const size_t msgListSize = 0,
+        void(*callback)(void) = nullptr
         );
 
 
@@ -111,6 +113,8 @@ class TraceClass {
   private:
     void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
+    const char **msgList  = nullptr;
+    void(*callback)(void) = nullptr;
     uint32_t periodMs    = 1;
     uint32_t stampTs     = 0;
     uint32_t printDelay  = 0;
@@ -120,7 +124,6 @@ class TraceClass {
     size_t msgListSize   = 0;
     uint8_t  stamp       = 0;
     bool     active      = true;
-    const char **msgList = nullptr;
     char printBuffer[TRACE_PRINTF_BUF_SIZE];
 };
 

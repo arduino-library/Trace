@@ -32,7 +32,7 @@
 
 
 
-void TraceClass::initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs, const char **msgList, const size_t msgListSize) {
+void TraceClass::initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t periodMs, const char **msgList, const size_t msgListSize, void(*callback)(void)) {
 
   assert (eepromAddr + sizeof(this->index) + sizeof(TraceMsg_t) * bufSize <= EEPROM.length());
 
@@ -41,6 +41,7 @@ void TraceClass::initialize (uint16_t eepromAddr, uint16_t bufSize, uint32_t per
   this->periodMs    = periodMs;
   this->msgList     = msgList;
   this->msgListSize = msgListSize;
+  this->callback    = callback;
 
   // Read the index from EEPROM
   eepromRead (eepromAddr, (uint8_t*)&this->index, sizeof(this->index));
@@ -131,6 +132,8 @@ void TraceClass::dump (void) {
     }
     idx++;
     if (idx >= bufSize) idx = 0;
+
+    if (callback != nullptr) callback();
   }
   if (stamp < 10)  Serial.print (' ');
   if (stamp < 100) Serial.print (' ');
