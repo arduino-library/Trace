@@ -112,13 +112,13 @@ class TraceClass {
     void eepromWrite (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
     uint32_t periodMs    = 1;
-    uint32_t stamp       = 0;
     uint32_t stampTs     = 0;
     uint32_t printDelay  = 0;
     uint16_t eepromAddr  = 0;
     uint16_t bufSize     = 0;
     uint16_t index       = 0;
     size_t msgListSize   = 0;
+    uint8_t  stamp       = 0;
     bool     active      = true;
     const char **msgList = nullptr;
     char printBuffer[TRACE_PRINTF_BUF_SIZE];
